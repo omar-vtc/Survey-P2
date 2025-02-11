@@ -8,6 +8,7 @@ import Layout from "./layout/Layout";
 import Registeration from "./pages/Registeration";
 import SurveyForm from "./pages/SurveyForm";
 import Report from "./pages/Report";
+import DecisionMatrix from "./components/DecisionMatrix";
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -24,13 +25,15 @@ const App = () => {
     // <Registeration />
     // <SurveyForm />
 
-    <Router>
-      <Routes>
-        <Route path="/" element={<Registeration />} />
-        <Route path="/survey" element={<SurveyForm />} />
-        <Route path="/report" element={<Report />} />
-      </Routes>
-    </Router>
+    // <Router>
+    //   <Routes>
+    //     <Route path="/" element={<Registeration />} />
+    //     <Route path="/survey" element={<SurveyForm />} />
+    //     <Route path="/report" element={<Report />} />
+    //   </Routes>
+    // </Router>
+
+    <DecisionMatrix />
   );
 };
 
