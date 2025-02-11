@@ -5,9 +5,5 @@ import UserInfoForm from "../components/UserInfoForm";
 export default function Registeration() {
   const [userInfo, setUserInfo] = useState(null);
 
-  return (
-    <Layout>
-      <UserInfoForm onSubmit={setUserInfo} />
-    </Layout>
-  );
+  return <UserInfoForm onSubmit={setUserInfo} />;
 }

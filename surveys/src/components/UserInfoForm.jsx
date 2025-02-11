@@ -6,7 +6,7 @@ const UserInfoForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "", // Added phone field
+    phone: "",
     age: "",
     gender: "",
     birthday: "",
@@ -25,149 +25,90 @@ const UserInfoForm = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    setFormData(userInfo); // Load from Zustand on mount
+    setFormData(userInfo);
   }, [userInfo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUserInfo(formData); // Store in Zustand and localStorage
+    setUserInfo(formData);
     onSubmit(formData);
-    navigate("/survey");
+    navigate("/home");
   };
 
   return (
     <form
-      className="space-y-6 bg-white p-6 rounded shadow w-[85%] mx-auto"
+      className="space-y-6 bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl mx-auto"
       onSubmit={handleSubmit}
     >
-      <div>
-        <label className="block text-lg font-medium mb-2">Name</label>
-        <input
-          type="text"
-          name="name"
-          className="w-full rounded p-3 border"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Email</label>
-        <input
-          type="email"
-          name="email"
-          className="w-full rounded p-3 border"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Phone Number</label>
-        <input
-          type="tel"
-          name="phone"
-          className="w-full rounded p-3 border"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Age</label>
-        <input
-          type="number"
-          name="age"
-          className="w-full rounded p-3 border"
-          value={formData.age}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Gender</label>
-        <select
-          name="gender"
-          className="w-full rounded p-3 border"
-          value={formData.gender}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Birthday</label>
-        <input
-          type="date"
-          name="birthday"
-          className="w-full rounded p-3 border"
-          value={formData.birthday}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Job</label>
-        <input
-          type="text"
-          name="job"
-          className="w-full rounded p-3 border"
-          value={formData.job}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Nationality</label>
-        <input
-          type="text"
-          name="nationality"
-          className="w-full rounded p-3 border"
-          value={formData.nationality}
-          onChange={handleChange}
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">
-          Education Level
-        </label>
-        <select
-          name="education"
-          className="w-full rounded p-3 border"
-          value={formData.education}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select</option>
-          <option value="High School">High School</option>
-          <option value="Undergraduate">Undergraduate</option>
-          <option value="Graduate">Graduate</option>
-          <option value="Postgraduate">Postgraduate</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-lg font-medium mb-2">Marital Status</label>
-        <select
-          name="maritalStatus"
-          className="w-full rounded p-3 border"
-          value={formData.maritalStatus}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Select</option>
-          <option value="Single">Single</option>
-          <option value="Married">Married</option>
-        </select>
-      </div>
-      <div className="flex justify-center">
+      <h2 className="text-3xl font-bold text-blue-700 text-center mb-6">
+        Enter Your Information
+      </h2>
+      {[
+        { label: "Name", name: "name", type: "text" },
+        { label: "Email", name: "email", type: "email" },
+        { label: "Phone Number", name: "phone", type: "tel" },
+        { label: "Age", name: "age", type: "number" },
+        { label: "Birthday", name: "birthday", type: "date" },
+        { label: "Job", name: "job", type: "text" },
+        { label: "Nationality", name: "nationality", type: "text" },
+      ].map(({ label, name, type }) => (
+        <div key={name}>
+          <label className="block text-lg font-medium mb-2 text-gray-700">
+            {label}
+          </label>
+          <input
+            type={type}
+            name={name}
+            className="w-full rounded-lg p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            value={formData[name]}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      ))}
+
+      {[
+        {
+          label: "Gender",
+          name: "gender",
+          options: ["Male", "Female", "Other"],
+        },
+        {
+          label: "Education Level",
+          name: "education",
+          options: ["High School", "Undergraduate", "Graduate", "Postgraduate"],
+        },
+        {
+          label: "Marital Status",
+          name: "maritalStatus",
+          options: ["Single", "Married"],
+        },
+      ].map(({ label, name, options }) => (
+        <div key={name}>
+          <label className="block text-lg font-medium mb-2 text-gray-700">
+            {label}
+          </label>
+          <select
+            name={name}
+            className="w-full rounded-lg p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            value={formData[name]}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select</option>
+            {options.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+      ))}
+
+      <div className="flex justify-center mt-6">
         <button
           type="submit"
-          className="bg-blue-500 text-white px-8 py-4 rounded text-xl"
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-600 transition"
         >
           Continue to Survey
         </button>
