@@ -3,7 +3,7 @@
     {
       "src": "surveys/package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "surveys/build" }
+      "config": { "outputDirectory": "build" }
     }
   ],
   "routes": [{ "src": "/(.*)", "dest": "surveys/$1" }]
