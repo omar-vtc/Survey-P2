@@ -7,12 +7,13 @@ import { questions } from "../data/Questions";
 import { options } from "../data/Questions"; // Ensure options are imported
 import { interpretations } from "../data/Questions";
 import { interpretScore } from "../services/Services";
+import { useNavigate } from "react-router-dom";
 
 const Result = () => {
   const { answers, scores } = useSurveyStore();
   const user = useUserStore((state) => state);
   const userInfo = user.userInfo;
-
+  const navigate = useNavigate();
   const generateWordFile = async () => {
     const doc = new Document({
       sections: [
@@ -191,12 +192,12 @@ const Result = () => {
         >
           Generate Word Report
         </button>
-        {/* <button
+        <button
           className="mt-4 bg-gray-500 text-white px-8 py-4 rounded text-lg"
-          onClick={resetSurvey}
+          onClick={() => navigate("/home")}
         >
-          Restart Survey
-        </button> */}
+          Back to Home Page
+        </button>
       </div>
     </div>
   );
