@@ -44,7 +44,7 @@ const Survey = () => {
     updateScores();
     try {
       const response = await axios.post(
-        "survey-backend-production-d324.up.railway.app/api/users/submit",
+        "https://survey-backend.up.railway.app/api/users/call",
         userInfoWithScores
       );
       setMessage(response.data.message);
