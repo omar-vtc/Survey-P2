@@ -42,18 +42,18 @@ const Survey = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateScores();
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5000/submit",
-    //     userInfoWithScores
-    //   );
-    //   setMessage(response.data.message);
-    // } catch (error) {
-    //   setMessage("Error submitting data: " + error.message);
-    //   console.error("Submission error:", error);
-    // } finally {
-    //   setLoading(false);
-    // }
+    try {
+      const response = await axios.post(
+        "https://survey-backend.up.railway.app/api/users/call",
+        userInfoWithScores
+      );
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage("Error submitting data: " + error.message);
+      console.error("Submission error:", error);
+    } finally {
+      setLoading(false);
+    }
     navigate("/report");
   };
 
