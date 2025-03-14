@@ -10,6 +10,7 @@ import SurveyForm from "./pages/SurveyForm";
 import Report from "./pages/Report";
 import DecisionMatrix from "./components/DecisionMatrix";
 import Home from "./components/Home";
+import PersonalitySurvey from "./pages/PersonalitySurvey";
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/survey" element={<SurveyForm />} />
         <Route path="/report" element={<Report />} />
         <Route path="/decision" element={<DecisionMatrix />} />
+        <Route path="/personality" element={<PersonalitySurvey />} />
       </Routes>
     </Router>
 

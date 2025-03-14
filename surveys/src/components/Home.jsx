@@ -30,6 +30,15 @@ const Home = () => {
             Decision-Making Survey
           </h2>
         </div>
+
+        <div
+          className="bg-white p-6 rounded-lg shadow-lg cursor-pointer hover:bg-blue-100 transition"
+          onClick={() => navigate("/personality")}
+        >
+          <h2 className="text-2xl font-semibold text-gray-800 text-center">
+            Personality Survey
+          </h2>
+        </div>
       </div>
     </div>
   );
