@@ -42,7 +42,6 @@ const Survey = ({ questions, options }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hello");
     updateScores(); // Compute and store scores before submitting
     //  setLoading(true);
 
