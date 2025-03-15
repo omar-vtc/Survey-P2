@@ -44,7 +44,6 @@ const Survey = ({ questions, options }) => {
     e.preventDefault();
     updateScores(); // Compute and store scores before submitting
     //  setLoading(true);
-
     //  try {
     //    const response = await axios.post(
     //      "https://survey-backend.up.railway.app/api/users/call",
