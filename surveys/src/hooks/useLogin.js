@@ -15,7 +15,7 @@ const useLogin = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/auth/login",
+        "https://survey-backend.up.railway.app/api/auth/login",
         formData
       );
       const token = res.data.token;
@@ -23,7 +23,7 @@ const useLogin = () => {
       setUserInfo({ ...res.data.user, token: token }); // Save user info
 
       const profile = await axios.get(
-        "http://localhost:8080/api/auth/profile",
+        "https://survey-backend.up.railway.app/api/auth/profile",
         {
           headers: { Authorization: `Bearer ${token}` },
         }

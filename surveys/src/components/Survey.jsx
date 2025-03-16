@@ -32,17 +32,21 @@ const Survey = ({ questions, options }) => {
     setPhone(userInfo.phone);
     updateScores(); // Compute and store scores before submitting
     setLoading(true);
-    //  try {
-    //    const response = await axios.post(
-    //      "https://survey-backend.up.railway.app/api/users/call",
-    //      userInfoWithScores
-    //  );
     try {
-      const response = await axios.post("http://localhost:8080/api/bigfive", {
-        answers,
-        scores,
-        phone,
-      });
+      const response = await axios.post(
+        "https://survey-backend.up.railway.app/api/bigfive",
+        {
+          answers,
+          scores,
+          phone,
+        }
+      );
+      // try {
+      //   const response = await axios.post("http://localhost:8080/api/bigfive", {
+      //     answers,
+      //     scores,
+      //     phone,
+      //   });
       setMessage(response.data.message);
     } catch (error) {
       setMessage("Error submitting data: " + error.message);
