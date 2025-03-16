@@ -9,6 +9,7 @@ export const useUserStore = create(
         name: "",
         email: "",
         phone: "",
+        password: "",
         age: "",
         gender: "",
         birthday: "",
@@ -16,11 +17,15 @@ export const useUserStore = create(
         nationality: "",
         education: "",
         maritalStatus: "",
+        token: null,
       },
-      setUserInfo: (data) => set({ userInfo: data }),
+      setUserInfo: (data) =>
+        set((state) => ({ userInfo: { ...state.userInfo, ...data } })), // Merges new data
+      setToken: (token) =>
+        set((state) => ({ userInfo: { ...state.userInfo, token } })),
     }),
     {
-      name: "user-info-storage", // Key for localStorage
+      name: "user-info-storage",
     }
   )
 );
