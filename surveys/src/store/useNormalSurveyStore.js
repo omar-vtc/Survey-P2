@@ -5,28 +5,32 @@ import { calculateBigFiveScores } from "../services/Services";
 export const useNormalSurveyStore = create(
   persist(
     (set, get) => ({
-      answers: {}, // Stores section-wise answers
-      scores: {}, // Stores computed scores
-      showResult: false,
+      phone: "", // Store user phone number
+      answers: {}, // Store answers in a sectioned format { "Section A": { "1": 5, "2": 0 }, "Section B": { "3": 4 } }
+      scores: {}, // Store computed scores
 
-      setAnswer: (section, index, value) =>
+      setPhone: (phone) => set({ phone }),
+
+      setAnswer: (section, questionIndex, value) =>
         set((state) => {
-          const updatedAnswers = { ...state.answers };
+          const updatedAnswers = {
+            ...state.answers,
+            [section]: {
+              ...(state.answers[section] || {}), // Preserve previous section answers
+              [questionIndex]: Number(value), // Store values as numbers
+            },
+          };
 
-          if (!updatedAnswers[section]) {
-            updatedAnswers[section] = [];
-          }
-
-          updatedAnswers[section][index] = Number(value); // Convert to number
+          console.log("Updated Answers:", updatedAnswers); // Debugging
           return { answers: updatedAnswers };
         }),
 
       updateScores: () => {
         const allAnswers = get().answers.questions;
-        console.log(allAnswers);
+        console.log("ALL ANSWERS ->", allAnswers);
 
-        if (allAnswers.length < 50) {
-          console.error("Not all questions are answered:", allAnswers);
+        if (Object.keys(allAnswers).length === 0) {
+          console.error("No answers provided!");
           return;
         }
 
@@ -35,7 +39,10 @@ export const useNormalSurveyStore = create(
         set({ scores });
       },
 
-      setShowResult: (value) => set({ showResult: value }),
+      getSurveyData: () => {
+        const { phone, answers, scores } = get();
+        return { phone, answers, scores };
+      },
     }),
     {
       name: "Normal-survey-storage",

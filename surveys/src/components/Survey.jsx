@@ -22,40 +22,34 @@ const Survey = ({ questions, options }) => {
     setShowResult,
     scores,
     updateScores,
+    phone,
+    setPhone,
   } = useNormalSurveyStore();
-
-  const scoresWithInterpretations = Object.entries(scores).reduce(
-    (acc, [section, score]) => {
-      acc[section] = {
-        score,
-        interpretation: interpretScore(section, score),
-      };
-      return acc;
-    },
-    {}
-  );
-
-  const userInfoWithScores = {
-    ...userInfo,
-    scoresWithInterpretations,
-  };
+  console.log({ answers, scores, phone });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setPhone(userInfo.phone);
     updateScores(); // Compute and store scores before submitting
-    //  setLoading(true);
+    setLoading(true);
     //  try {
     //    const response = await axios.post(
     //      "https://survey-backend.up.railway.app/api/users/call",
     //      userInfoWithScores
-    //    );
-    //    setMessage(response.data.message);
-    //  } catch (error) {
-    //    setMessage("Error submitting data: " + error.message);
-    //    console.error("Submission error:", error);
-    //  } finally {
-    //    setLoading(false);
-    //  }
+    //  );
+    try {
+      const response = await axios.post("http://localhost:8080/api/bigfive", {
+        answers,
+        scores,
+        phone,
+      });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage("Error submitting data: " + error.message);
+      console.error("Submission error:", error);
+    } finally {
+      setLoading(false);
+    }
 
     navigate("/report");
   };
@@ -87,28 +81,34 @@ const Survey = ({ questions, options }) => {
                 </tr>
               </thead>
               <tbody>
-                {qs.map((q, index) => (
-                  <tr key={index} className="hover:bg-gray-100">
-                    <td className="border border-gray-300 px-4 py-3">{q}</td>
-                    {options.map((option) => (
-                      <td
-                        key={option.value}
-                        className="border border-gray-300 px-4 py-3 text-center"
-                      >
-                        <input
-                          type="radio"
-                          name={`section-${section}-question-${index}`}
-                          value={option.value}
-                          checked={answers?.[section]?.[index] === option.value}
-                          onChange={(e) =>
-                            setAnswer(section, index, e.target.value)
-                          }
-                          required
-                        />
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                {qs.map((q, index) => {
+                  const questionIndex = index + 1; // Start index from 1
+                  return (
+                    <tr key={questionIndex} className="hover:bg-gray-100">
+                      <td className="border border-gray-300 px-4 py-3">{q}</td>
+                      {options.map((option) => (
+                        <td
+                          key={option.value}
+                          className="border border-gray-300 px-4 py-3 text-center"
+                        >
+                          <input
+                            type="radio"
+                            name={`section-${section}-question-${questionIndex}`}
+                            value={option.value}
+                            checked={
+                              answers?.[section]?.[questionIndex] ===
+                              option.value
+                            }
+                            onChange={(e) =>
+                              setAnswer(section, questionIndex, e.target.value)
+                            }
+                            required
+                          />
+                        </td>
+                      ))}
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

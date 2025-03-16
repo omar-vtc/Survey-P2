@@ -28,12 +28,12 @@ const Result = () => {
         </div>
       ))}
       <div className="flex space-x-4">
-        <button
+        {/* <button
           className="mt-4 bg-gray-500 text-white px-8 py-4 rounded text-lg"
           onClick={() => navigate("/home")}
         >
           Back to Home Page
-        </button>
+        </button> */}
       </div>
     </div>
   );

@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useUserStore } from "../store/useUserStore";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useLogin from "../hooks/useLogin";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     phone: "",
     password: "",
   });
-  const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const { setUserInfo, setToken } = useUserStore();
   const navigate = useNavigate();
+  const { login, loading, message } = useLogin(); // Use the hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,25 +21,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    try {
-      const res = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        formData
-      );
-
-      setMessage(res.data.message);
-      setUserInfo({ ...res.data.user, token: res.data.token }); // Merge user data and token
-      navigate("/home");
-    } catch (error) {
-      setMessage(
-        "Login failed: " + (error.response?.data?.message || error.message)
-      );
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
+    login(formData);
   };
 
   return (
