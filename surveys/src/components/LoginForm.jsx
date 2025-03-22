@@ -1,27 +1,17 @@
 import React, { useState } from "react";
 import { useUserStore } from "../store/useUserStore";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import useLogin from "../hooks/useLogin";
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    phone: "",
-    password: "",
-  });
-
-  const { setUserInfo, setToken } = useUserStore();
+  const [phone, setPhone] = useState("");
+  const { setUserInfo } = useUserStore();
   const navigate = useNavigate();
-  const { login, loading, message } = useLogin(); // Use the hook
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const { login, loading, message } = useLogin(); // Use the login hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData);
+    login({ phone }); // Send only phone number
   };
 
   return (
@@ -34,24 +24,20 @@ const LoginForm = () => {
           Login
         </h2>
 
-        {[
-          { label: "Phone Number", name: "phone", type: "tel" },
-          { label: "Password", name: "password", type: "password" },
-        ].map(({ label, name, type }) => (
-          <div key={name}>
-            <label className="block text-lg font-medium mb-2 text-gray-700">
-              {label}
-            </label>
-            <input
-              type={type}
-              name={name}
-              className="w-full rounded-lg p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-              value={formData[name]}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        ))}
+        {/* Phone Number Input */}
+        <div>
+          <label className="block text-lg font-medium mb-2 text-gray-700">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            className="w-full rounded-lg p-3 border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+        </div>
 
         {message && <p className="text-red-500 text-center">{message}</p>}
 
