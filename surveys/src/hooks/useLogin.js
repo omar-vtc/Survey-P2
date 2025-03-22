@@ -13,19 +13,20 @@ const useLogin = () => {
     setLoading(true);
     setMessage("");
 
+    //        "https://survey-backend.up.railway.app/api/auth/login",
+
     try {
       const res = await axios.post(
         "https://survey-backend.up.railway.app/api/auth/login",
         formData
       );
-      const token = res.data.token;
       setMessage(res.data.message);
-      setUserInfo({ ...res.data.user, token: token }); // Save user info
-
+      setUserInfo({ ...res.data.user, token: null }); // Save user info
+      // "https://survey-backend.up.railway.app/api/auth/profile"
       const profile = await axios.get(
         "https://survey-backend.up.railway.app/api/auth/profile",
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { "x-user-phone": formData.phone }, // Replace with actual phone number
         }
       );
       const { _id, createdAt, updatedAt, __v, ...userData } = profile.data;

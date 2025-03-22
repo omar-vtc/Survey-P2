@@ -7,17 +7,10 @@ export const useUserStore = create(
     (set) => ({
       userInfo: {
         name: "",
-        email: "",
         phone: "",
-        password: "",
         age: "",
         gender: "",
-        birthday: "",
         job: "",
-        nationality: "",
-        education: "",
-        maritalStatus: "",
-        token: null,
       },
       setUserInfo: (data) =>
         set((state) => ({ userInfo: { ...state.userInfo, ...data } })), // Merges new data
