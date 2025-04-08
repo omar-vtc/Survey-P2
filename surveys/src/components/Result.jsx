@@ -2,6 +2,7 @@ import React from "react";
 import { useNormalSurveyStore } from "../store/useNormalSurveyStore"; // Updated import
 import { interpretScore } from "../services/Services";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // Personality trait descriptions
 const traitDescriptions = {
@@ -15,26 +16,22 @@ const traitDescriptions = {
 const Result = () => {
   const { scores } = useNormalSurveyStore(); // Use the correct store
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="p-4 bg-white shadow rounded">
-      <h2 className="font-bold text-lg mb-4">Results</h2>
+      <h2 className="font-bold text-lg mb-4">{t("Results")}</h2>
       {Object.entries(scores).map(([section, score]) => (
         <div key={section} className="mb-4 p-4 border rounded">
           <p className="text-gray-700">
-            Score: <span className="font-semibold">{score}</span>
+            {t("Score")}: <span className="font-semibold">{score}</span>
           </p>
-          <p className="text-gray-600 italic">{traitDescriptions[section]}</p>
+          <p className="text-gray-600 italic">
+            {t(traitDescriptions[section])}
+          </p>
         </div>
       ))}
-      <div className="flex space-x-4">
-        {/* <button
-          className="mt-4 bg-gray-500 text-white px-8 py-4 rounded text-lg"
-          onClick={() => navigate("/home")}
-        >
-          Back to Home Page
-        </button> */}
-      </div>
+      <div className="flex space-x-4"></div>
     </div>
   );
 };
