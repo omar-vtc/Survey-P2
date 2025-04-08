@@ -5,6 +5,7 @@ import { useUserStore } from "../store/useUserStore";
 import axios from "axios";
 import { interpretScore } from "../services/Services";
 import { useNormalSurveyStore } from "../store/useNormalSurveyStore";
+import { useTranslation } from "react-i18next";
 
 const Survey = ({ questions, options }) => {
   const location = useLocation();
@@ -12,6 +13,7 @@ const Survey = ({ questions, options }) => {
   const { userInfo } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const { t, i18n } = useTranslation();
 
   // Determine which store to use based on the route
   const isPersonalitySurvey = location.pathname.includes("personality");
@@ -73,13 +75,15 @@ const Survey = ({ questions, options }) => {
             <table className="w-full border-collapse border border-gray-300 text-left">
               <thead>
                 <tr className="bg-blue-100">
-                  <th className="border border-gray-300 px-4 py-3">Question</th>
+                  <th className="border border-gray-300 px-4 py-3">
+                    {t("Question")}
+                  </th>
                   {options.map((option) => (
                     <th
                       key={option.value}
                       className="border border-gray-300 px-4 py-3 text-center"
                     >
-                      {option.label}
+                      {t(option.label)}
                     </th>
                   ))}
                 </tr>
@@ -89,7 +93,9 @@ const Survey = ({ questions, options }) => {
                   const questionIndex = index + 1; // Start index from 1
                   return (
                     <tr key={questionIndex} className="hover:bg-gray-100">
-                      <td className="border border-gray-300 px-4 py-3">{q}</td>
+                      <td className="border border-gray-300 px-4 py-3">
+                        {t(q)}
+                      </td>
                       {options.map((option) => (
                         <td
                           key={option.value}

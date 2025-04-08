@@ -39,6 +39,7 @@ const useLogin = () => {
       console.error("Login error:", error);
     } finally {
       setLoading(false);
+      navigate("/personality");
     }
   };
 
